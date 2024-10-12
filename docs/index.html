@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ESP8266 Flash Tool</title>
+    <!-- Einbindung des ESP Web Tools -->
+    <script type="module" src="https://unpkg.com/esp-web-tools@8.0.3/dist/web/install-button.js?module"></script>
+</head>
+<body>
+    <h1>ESP8266 Flash Tool</h1>
+    <button id="connectButton">Verbinden</button>
+    <select id="firmwareSelect">
+        <option value="">Firmware auswählen</option>
+    </select>
+    <!-- Installations-Button von ESP Web Tools -->
+    <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+
+    <div id="status"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
