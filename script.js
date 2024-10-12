@@ -1,5 +1,10 @@
 const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
 
+// Funktion zum Parsen der URL-Parameter
+function getURLParameter(name) {
+    return new URLSearchParams(window.location.search).get(name);
+}
+
 async function fetchFirmwareList() {
     const firmwareSelect = document.getElementById('firmwareSelect');
 
@@ -14,6 +19,14 @@ async function fetchFirmwareList() {
             option.text = `${firmware.name} - Version ${firmware.version}`;
             firmwareSelect.add(option);
         });
+
+        // Prüfen, ob ein 'get'-Parameter vorhanden ist
+        const preselectFirmware = getURLParameter('get');
+        if (preselectFirmware) {
+            firmwareSelect.value = preselectFirmware;
+            // Event manuell auslösen
+            firmwareSelect.dispatchEvent(new Event('change'));
+        }
     } catch (err) {
         console.error('Fehler beim Abrufen der Firmware-Liste:', err);
     }
@@ -25,9 +38,11 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
     const firmwareName = this.value;
     const variantSelect = document.getElementById('variantSelect');
     const flashButton = document.getElementById('flashButton');
+    const variantLabel = document.querySelector('label[for="variantSelect"]');
 
     // Variante zurücksetzen
     variantSelect.style.display = 'none';
+    variantLabel.style.display = 'none';
     variantSelect.innerHTML = '<option value="">Bitte Variante wählen</option>';
     flashButton.disabled = true;
     flashButton.manifest = '';
@@ -48,8 +63,15 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
             variantSelect.add(option);
         });
 
-        variantSelect.style.display = 'inline';
-        document.querySelector('label[for="variantSelect"]').style.display = 'inline';
+        variantSelect.style.display = 'block';
+        variantLabel.style.display = 'block';
+
+        // Prüfen, ob ein 'variant'-Parameter vorhanden ist
+        const preselectVariant = getURLParameter('variant');
+        if (preselectVariant) {
+            variantSelect.value = preselectVariant;
+            variantSelect.dispatchEvent(new Event('change'));
+        }
 
     } catch (err) {
         console.error('Fehler beim Abrufen der Varianten:', err);
@@ -87,4 +109,3 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
 });
-
