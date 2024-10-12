@@ -1,6 +1,6 @@
 const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
 
-// Funktion zum Parsen der URL-Parameter
+// Function to parse URL parameters
 function getURLParameter(name) {
     return new URLSearchParams(window.location.search).get(name);
 }
@@ -8,7 +8,7 @@ function getURLParameter(name) {
 async function fetchFirmwareList() {
     const firmwareSelect = document.getElementById('firmwareSelect');
 
-    // Abrufen der Firmware-Liste vom zentralen Repository
+    // Fetch the firmware list from the central repository
     try {
         const response = await fetch(`${centralRepoBaseURL}/firmware_list.json`);
         const firmwareList = await response.json();
@@ -20,15 +20,15 @@ async function fetchFirmwareList() {
             firmwareSelect.add(option);
         });
 
-        // Prüfen, ob ein 'get'-Parameter vorhanden ist
+        // Check if a 'get' parameter is present
         const preselectFirmware = getURLParameter('get');
         if (preselectFirmware) {
             firmwareSelect.value = preselectFirmware;
-            // Event manuell auslösen
+            // Manually trigger change event
             firmwareSelect.dispatchEvent(new Event('change'));
         }
     } catch (err) {
-        console.error('Fehler beim Abrufen der Firmware-Liste:', err);
+        console.error('Error fetching firmware list:', err);
     }
 }
 
@@ -40,10 +40,10 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
     const flashButton = document.getElementById('flashButton');
     const variantLabel = document.querySelector('label[for="variantSelect"]');
 
-    // Variante zurücksetzen
+    // Reset variant
     variantSelect.style.display = 'none';
     variantLabel.style.display = 'none';
-    variantSelect.innerHTML = '<option value="">Bitte Variante wählen</option>';
+    variantSelect.innerHTML = '<option value="">Please select a variant</option>';
     flashButton.disabled = true;
     flashButton.removeAttribute('enabled');
     flashButton.manifest = '';
@@ -52,7 +52,7 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         return;
     }
 
-    // Abrufen der Varianten für die ausgewählte Firmware
+    // Fetch variants for the selected firmware
     try {
         const response = await fetch(`${centralRepoBaseURL}/${firmwareName}/variants.json`);
         const variants = await response.json();
@@ -67,7 +67,7 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         variantSelect.style.display = 'block';
         variantLabel.style.display = 'block';
 
-        // Prüfen, ob ein 'variant'-Parameter vorhanden ist
+        // Check if a 'variant' parameter is present
         const preselectVariant = getURLParameter('variant');
         if (preselectVariant) {
             variantSelect.value = preselectVariant;
@@ -75,7 +75,7 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         }
 
     } catch (err) {
-        console.error('Fehler beim Abrufen der Varianten:', err);
+        console.error('Error fetching variants:', err);
     }
 });
 
@@ -112,4 +112,3 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     flashButton.disabled = false;
     flashButton.setAttribute('enabled', 'true');
 });
-
