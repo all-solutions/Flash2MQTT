@@ -8,10 +8,18 @@
 </head>
 <body>
     <h1>ESP8266 Flash Tool</h1>
-    <button id="connectButton">Verbinden</button>
+    <!-- Firmware-Auswahl -->
+    <label for="firmwareSelect">Firmware auswählen:</label>
     <select id="firmwareSelect">
-        <option value="">Firmware auswählen</option>
+        <option value="">Bitte wählen</option>
     </select>
+
+    <!-- Varianten-Auswahl -->
+    <label for="variantSelect" style="display: none;">Variante auswählen:</label>
+    <select id="variantSelect" style="display: none;">
+        <option value="">Bitte Variante wählen</option>
+    </select>
+
     <!-- Installations-Button von ESP Web Tools -->
     <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
 
