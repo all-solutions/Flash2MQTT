@@ -6,7 +6,7 @@
     <!-- Einbindung des ESP Web Tools -->
     <script type="module" src="https://unpkg.com/esp-web-tools@8.0.3/dist/web/install-button.js?module"></script>
     <style>
-        /* CSS für die Anordnung der Elemente und das Deaktivieren des Buttons */
+        /* CSS für die Anordnung der Elemente */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -15,10 +15,20 @@
             display: block;
             margin-bottom: 15px;
         }
-        #flashButton[disabled] {
-            background-color: grey !important;
+        /* Style für den Button, wenn er deaktiviert ist */
+        esp-web-install-button::part(button) {
+            background-color: grey;
             pointer-events: none;
             opacity: 0.6;
+            width: auto;
+        }
+        /* Style für den Button, wenn er aktiviert ist */
+        esp-web-install-button[enabled]::part(button) {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+            opacity: 1;
         }
     </style>
 </head>
@@ -44,4 +54,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
