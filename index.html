@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ESP8266 Flash Tool</title>
-    <!-- Einbindung des ESP Web Tools -->
+    <title>Install *2MQTT Firmware</title>
+    <!-- Include ESP Web Tools -->
     <script type="module" src="https://unpkg.com/esp-web-tools@8.0.3/dist/web/install-button.js?module"></script>
     <style>
-        /* CSS für die Anordnung der Elemente */
+        /* Center the content */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            text-align: center;
         }
         label, select, button, esp-web-install-button {
             display: block;
-            margin-bottom: 15px;
+            margin: 15px auto;
+            text-align: center;
         }
-        /* Style für den Button, wenn er deaktiviert ist */
+        /* Style for the button when disabled */
         esp-web-install-button::part(button) {
             background-color: grey;
             pointer-events: none;
             opacity: 0.6;
             width: auto;
         }
-        /* Style für den Button, wenn er aktiviert ist */
+        /* Style for the button when enabled */
         esp-web-install-button[enabled]::part(button) {
             background-color: #007bff;
             color: white;
@@ -30,29 +32,45 @@
             pointer-events: auto;
             opacity: 1;
         }
+        /* Style for the instructions */
+        .instructions {
+            text-align: left;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1>ESP8266 Flash Tool</h1>
-    <!-- Firmware-Auswahl -->
-    <label for="firmwareSelect">Firmware auswählen:</label>
+    <h1>Install *2MQTT Firmware</h1>
+
+    <div class="instructions">
+        <ol>
+            <li>Connect the ESP device to your computer using USB or serial-to-USB adapter</li>
+            <li>Select the firmware variant suitable for your device</li>
+            <li>Hit "Connect" and select the correct port</li>
+        </ol>
+    </div>
+
+    <!-- Firmware Selection -->
+    <label for="firmwareSelect">Select Firmware:</label>
     <select id="firmwareSelect">
-        <option value="">Bitte wählen</option>
+        <option value="">Please select</option>
     </select>
 
-    <!-- Varianten-Auswahl -->
-    <label for="variantSelect" style="display: none;">Variante auswählen:</label>
+    <!-- Variant Selection -->
+    <label for="variantSelect" style="display: none;">Select Variant:</label>
     <select id="variantSelect" style="display: none;">
-        <option value="">Bitte Variante wählen</option>
+        <option value="">Please select a variant</option>
     </select>
 
-    <!-- Installations-Button von ESP Web Tools -->
+    <!-- ESP Web Install Button -->
     <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+
+    <!-- Additional Text Under Connect Button -->
+    <p>*2MQTT Firmware Installer inspired by ESP Web Tools</p>
 
     <div id="status"></div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-
