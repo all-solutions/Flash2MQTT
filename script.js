@@ -45,6 +45,7 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
     variantLabel.style.display = 'none';
     variantSelect.innerHTML = '<option value="">Bitte Variante wählen</option>';
     flashButton.disabled = true;
+    flashButton.removeAttribute('enabled');
     flashButton.manifest = '';
 
     if (!firmwareName) {
@@ -84,6 +85,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     if (!firmwareUrl) {
         flashButton.disabled = true;
+        flashButton.removeAttribute('enabled');
         flashButton.manifest = '';
         return;
     }
@@ -108,4 +110,6 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
+    flashButton.setAttribute('enabled', 'true');
 });
+
