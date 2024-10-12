@@ -1,43 +1,68 @@
-const repos = [
-    'softwarecrash/Daly2MQTT',
-    'softwarecrash/Solar2MQTT',
-    'softwarecrash/EPEver2MQTT',
-    'softwarecrash/Victron2MQTT',
-    'softwarecrash/100Balance2MQTT'
-];
+const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
 
 async function fetchFirmwareList() {
     const firmwareSelect = document.getElementById('firmwareSelect');
 
-    for (const repo of repos) {
-        const apiUrl = `https://api.github.com/repos/${repo}/releases/latest`;
+    // Abrufen der Firmware-Liste vom zentralen Repository
+    try {
+        const response = await fetch(`${centralRepoBaseURL}/firmware_list.json`);
+        const firmwareList = await response.json();
 
-        try {
-            const response = await fetch(apiUrl);
-            const release = await response.json();
-
-            const assets = release.assets.filter(asset => {
-                return asset.name.includes('_d1_mini_') && !asset.name.includes('OTA');
-            });
-
-            assets.forEach(asset => {
-                const option = document.createElement('option');
-                option.value = asset.browser_download_url;
-                option.text = `${repo.split('/')[1]} - ${asset.name}`;
-                firmwareSelect.add(option);
-            });
-        } catch (err) {
-            console.error(`Fehler beim Abrufen der Releases von ${repo}:`, err);
-        }
+        firmwareList.forEach(firmware => {
+            const option = document.createElement('option');
+            option.value = firmware.name;
+            option.text = `${firmware.name} - Version ${firmware.version}`;
+            firmwareSelect.add(option);
+        });
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Firmware-Liste:', err);
     }
 }
 
 fetchFirmwareList();
 
-async function createManifest() {
-    const firmwareUrl = document.getElementById('firmwareSelect').value;
+document.getElementById('firmwareSelect').addEventListener('change', async function () {
+    const firmwareName = this.value;
+    const variantSelect = document.getElementById('variantSelect');
+    const flashButton = document.getElementById('flashButton');
+
+    // Variante zurücksetzen
+    variantSelect.style.display = 'none';
+    variantSelect.innerHTML = '<option value="">Bitte Variante wählen</option>';
+    flashButton.disabled = true;
+    flashButton.manifest = '';
+
+    if (!firmwareName) {
+        return;
+    }
+
+    // Abrufen der Varianten für die ausgewählte Firmware
+    try {
+        const response = await fetch(`${centralRepoBaseURL}/${firmwareName}/variants.json`);
+        const variants = await response.json();
+
+        variants.forEach(variant => {
+            const option = document.createElement('option');
+            option.value = variant.file;
+            option.text = variant.displayName;
+            variantSelect.add(option);
+        });
+
+        variantSelect.style.display = 'inline';
+        document.querySelector('label[for="variantSelect"]').style.display = 'inline';
+
+    } catch (err) {
+        console.error('Fehler beim Abrufen der Varianten:', err);
+    }
+});
+
+document.getElementById('variantSelect').addEventListener('change', function () {
+    const firmwareUrl = this.value;
+    const flashButton = document.getElementById('flashButton');
+
     if (!firmwareUrl) {
-        alert('Bitte wählen Sie eine Firmware aus.');
+        flashButton.disabled = true;
+        flashButton.manifest = '';
         return;
     }
 
@@ -59,9 +84,7 @@ async function createManifest() {
     const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
     const manifestUrl = URL.createObjectURL(blob);
 
-    const installer = document.querySelector('esp-web-install-button');
-    installer.manifest = manifestUrl;
-    installer.disabled = false;
-}
+    flashButton.manifest = manifestUrl;
+    flashButton.disabled = false;
+});
 
-document.getElementById('firmwareSelect').addEventListener('change', createManifest);
