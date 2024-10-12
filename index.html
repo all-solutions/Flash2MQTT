@@ -17,9 +17,9 @@
             margin: 15px auto;
             text-align: center;
         }
-        /* Add extra space below the variant selection */
-        #variantSelect {
-            margin-bottom: 60px; /* Increased from 15px to 60px to add extra space */
+        /* Add extra space below the variant selection or firmware selection */
+        .spacer {
+            height: 60px; /* Adjust the height to create approximately three lines of space */
         }
         /* Style for the button when disabled */
         esp-web-install-button::part(button) {
@@ -66,6 +66,9 @@
     <select id="variantSelect" style="display: none;">
         <option value="">Please select a variant</option>
     </select>
+
+    <!-- Spacer to create extra space regardless of variant selection visibility -->
+    <div class="spacer"></div>
 
     <!-- ESP Web Install Button -->
     <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
