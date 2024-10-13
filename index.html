@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Install *2MQTT Firmware</title>
-    <!-- Include ESP Web Tools -->
-    <script type="module" src="https://unpkg.com/esp-web-tools@8.0.3/dist/web/install-button.js?module"></script>
+    <!-- Include the latest version of ESP Web Tools -->
+    <script type="module" src="https://unpkg.com/esp-web-tools@latest/dist/web/install-button.js?module"></script>
     <style>
         /* Center the content */
         body {
@@ -17,18 +17,17 @@
             margin: 15px auto;
             text-align: center;
         }
-        /* Add extra space below the variant selection or firmware selection */
+        /* Spacer between dropdowns and Connect button */
         .spacer {
-            height: 60px; /* Adjust the height to create approximately three lines of space */
+            height: 60px;
         }
-        /* Style for the button when disabled */
+        /* Style for the Connect button */
         esp-web-install-button::part(button) {
             background-color: grey;
             pointer-events: none;
             opacity: 0.6;
             width: auto;
         }
-        /* Style for the button when enabled */
         esp-web-install-button[enabled]::part(button) {
             background-color: #007bff;
             color: white;
@@ -36,23 +35,36 @@
             pointer-events: auto;
             opacity: 1;
         }
-        /* Style for the instructions */
+        /* Instructions styling */
         .instructions {
             text-align: left;
             display: inline-block;
             margin-bottom: 30px;
         }
-        /* Style for the grey horizontal line */
+        /* Divider styling */
         .divider {
             border-top: 1px solid grey;
             width: 60%;
-            margin: 30px auto; /* Adjust margin to add space above and below */
+            margin: 30px auto;
         }
-        /* Style for the footer text */
+        /* Footer text styling */
         .footer-text {
             color: grey;
             font-size: 0.9em;
             margin-top: 10px;
+        }
+        /* Override deprecated media feature */
+        @media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            /* Empty block to neutralize deprecated media feature */
+        }
+        /* Use standardized forced-colors media feature */
+        @media (forced-colors: active) {
+            /* Adjust styles for users with Forced Colors Mode enabled */
+            body {
+                background: Window;
+                color: WindowText;
+            }
+            /* Add any additional adjustments needed for forced colors mode */
         }
     </style>
 </head>
