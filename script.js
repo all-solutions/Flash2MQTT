@@ -91,7 +91,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     }
 
     const manifest = {
-        "name": "ESP8266 Flash Tool",
+        "name": "*2MQTT Flash Tool",
         "builds": [
             {
                 "chipFamily": "ESP8266",
