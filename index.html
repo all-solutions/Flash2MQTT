@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Install *2MQTT Firmware</title>
-    <!-- Include the latest version of ESP Web Tools -->
+    <!-- Favicon einbinden -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Einbindung des ESP Web Tools -->
     <script type="module" src="https://unpkg.com/esp-web-tools@latest/dist/web/install-button.js?module"></script>
     <style>
-        /* Center the content */
+        /* Zentriere den Inhalt */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -17,17 +19,18 @@
             margin: 15px auto;
             text-align: center;
         }
-        /* Spacer between dropdowns and Connect button */
+        /* Abstand zwischen Dropdowns und Connect-Button */
         .spacer {
             height: 60px;
         }
-        /* Style for the Connect button */
+        /* Stil für den Connect-Button im deaktivierten Zustand */
         esp-web-install-button::part(button) {
             background-color: grey;
             pointer-events: none;
             opacity: 0.6;
             width: auto;
         }
+        /* Stil für den Connect-Button im aktivierten Zustand */
         esp-web-install-button[enabled]::part(button) {
             background-color: #007bff;
             color: white;
@@ -35,36 +38,36 @@
             pointer-events: auto;
             opacity: 1;
         }
-        /* Instructions styling */
+        /* Stil für die Anweisungen */
         .instructions {
             text-align: left;
             display: inline-block;
             margin-bottom: 30px;
         }
-        /* Divider styling */
+        /* Stil für die Trennlinie */
         .divider {
             border-top: 1px solid grey;
             width: 60%;
             margin: 30px auto;
         }
-        /* Footer text styling */
+        /* Stil für den Footer-Text */
         .footer-text {
             color: grey;
             font-size: 0.9em;
             margin-top: 10px;
         }
-        /* Override deprecated media feature */
+        /* Überschreibe veraltete Media Features */
         @media (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            /* Empty block to neutralize deprecated media feature */
+            /* Leerer Block, um das veraltete Feature zu neutralisieren */
         }
-        /* Use standardized forced-colors media feature */
+        /* Verwende standardisiertes forced-colors Media Feature */
         @media (forced-colors: active) {
-            /* Adjust styles for users with Forced Colors Mode enabled */
+            /* Anpassungen für Benutzer mit aktiviertem Forced Colors Mode */
             body {
                 background: Window;
                 color: WindowText;
             }
-            /* Add any additional adjustments needed for forced colors mode */
+            /* Weitere notwendige Anpassungen */
         }
     </style>
 </head>
@@ -79,28 +82,28 @@
         </ol>
     </div>
 
-    <!-- Firmware Selection -->
+    <!-- Firmware-Auswahl -->
     <label for="firmwareSelect">Select Firmware:</label>
     <select id="firmwareSelect">
         <option value="">Please select</option>
     </select>
 
-    <!-- Variant Selection -->
+    <!-- Varianten-Auswahl -->
     <label for="variantSelect" style="display: none;">Select Variant:</label>
     <select id="variantSelect" style="display: none;">
         <option value="">Please select a variant</option>
     </select>
 
-    <!-- Spacer to create extra space regardless of variant selection visibility -->
+    <!-- Abstandshalter -->
     <div class="spacer"></div>
 
-    <!-- ESP Web Install Button -->
+    <!-- Installations-Button von ESP Web Tools -->
     <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
 
-    <!-- Grey horizontal line -->
+    <!-- Trennlinie -->
     <div class="divider"></div>
 
-    <!-- Footer Text -->
+    <!-- Footer-Text -->
     <p class="footer-text">
         *2MQTT Firmware Installer inspired by ESP Web Tools<br>
         &copy; <span id="currentYear"></span> by all-solutions
@@ -110,7 +113,7 @@
 
     <script src="script.js"></script>
     <script>
-        // Set the current year in the footer
+        // Setze das aktuelle Jahr im Footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
