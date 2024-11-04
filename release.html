@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash2MQTT Release</title>
+    <title>Flash2MQTT Release JSON</title>
 </head>
 <body>
-    <h1>Flash2MQTT Release</h1>
-    <pre id="output">Lade Daten...</pre>
-
     <script>
-        const outputElement = document.getElementById("output");
-
         async function fetchJSON(url) {
             const response = await fetch(url);
             if (!response.ok) {
@@ -21,24 +15,24 @@
         }
 
         async function loadReleaseData() {
+            const baseURL = "https://raw.githubusercontent.com/all-solutions/Flash2MQTT/main/firmware";
+            const firmwareListURL = `${baseURL}/firmware_list.json`;
+            const releaseData = { release: [] };
+
             try {
-                const baseURL = "https://raw.githubusercontent.com/all-solutions/Flash2MQTT/main/firmware";
-                const firmwareListURL = `${baseURL}/firmware_list.json`;
-                
                 // Lade firmware_list.json
                 const firmwareList = await fetchJSON(firmwareListURL);
-                const releaseData = { release: [] };
 
                 // Gehe jede Firmware im firmware_list.json durch
                 for (const firmware of firmwareList) {
                     const { name, version } = firmware;
                     const variantsURL = `${baseURL}/${name}/variants.json`;
 
-                    // Lade variants.json für jede Firmware
                     try {
+                        // Lade variants.json für jede Firmware
                         const variants = await fetchJSON(variantsURL);
 
-                        // Verarbeite jede Variante
+                        // Verarbeite jede Variante und füge zur Release-Datenstruktur hinzu
                         for (const variant of variants) {
                             const { displayName, file } = variant;
                             releaseData.release.push({
@@ -51,10 +45,10 @@
                     }
                 }
 
-                // Zeige das Ergebnis an
-                outputElement.textContent = JSON.stringify(releaseData, null, 2);
+                // JSON-Ausgabe direkt im Dokumentkopf als JavaScript-Objekt
+                document.body.innerText = JSON.stringify(releaseData, null, 2);
             } catch (error) {
-                outputElement.textContent = `Fehler beim Laden der Daten: ${error.message}`;
+                document.body.innerText = JSON.stringify({ error: error.message }, null, 2);
             }
         }
 
