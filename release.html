@@ -45,7 +45,7 @@
                     }
                 }
 
-                // JSON-Ausgabe direkt im Dokumentkopf als JavaScript-Objekt
+                // JSON-Ausgabe
                 document.body.innerText = JSON.stringify(releaseData, null, 2);
             } catch (error) {
                 document.body.innerText = JSON.stringify({ error: error.message }, null, 2);
