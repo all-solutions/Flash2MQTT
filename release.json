@@ -1,0 +1,44 @@
+{
+  "release": [
+    {
+      "binary": "Daly2MQTTD1 Mini2.14.2",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_d1_mini_2.14.2.bin"
+    },
+    {
+      "binary": "Daly2MQTTESP-012.14.2",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.14.2.bin"
+    },
+    {
+      "binary": "Solar2MQTTD1 Mini1.1.8",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_d1_mini.bin"
+    },
+    {
+      "binary": "Solar2MQTTESP-011.1.8",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp01.bin"
+    },
+    {
+      "binary": "Solar2MQTTDongle1.1.8",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp12e.bin"
+    },
+    {
+      "binary": "EPEver2MQTTD1 Mini2.3.1",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_d1_mini.bin"
+    },
+    {
+      "binary": "EPEver2MQTTESP-012.3.1",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01.bin"
+    },
+    {
+      "binary": "Victron2MQTTD1 Mini1.2.4",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Victron2MQTT/Victron2MQTT_d1_mini.bin"
+    },
+    {
+      "binary": "100Balance2MQTTD1 Mini1.0.4",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/100Balance2MQTT/100Balance2MQTT_d1_mini_1.0.4.bin"
+    },
+    {
+      "binary": "100Balance2MQTTESP-011.0.4",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/100Balance2MQTT/100Balance2MQTT_esp01_1m_1.0.4.bin"
+    }
+  ]
+}
