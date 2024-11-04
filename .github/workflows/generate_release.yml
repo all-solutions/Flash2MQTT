@@ -1,0 +1,37 @@
+name: Generate Release JSON
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Täglich um Mitternacht
+  push:
+    branches:
+      - main  # Bei jedem Push auf den main-Zweig
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install node-fetch@2
+
+      - name: Generate release.json
+        run: node generateRelease.js
+
+      - name: Commit and Push release.json
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add release.json
+          git commit -m "Update release.json"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
