@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash2MQTT Release</title>
+</head>
+<body>
+    <h1>Flash2MQTT Release</h1>
+    <pre id="output">Lade Daten...</pre>
+
+    <script>
+        const outputElement = document.getElementById("output");
+
+        async function fetchJSON(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Fehler beim Laden der URL: ${url}`);
+            }
+            return response.json();
+        }
+
+        async function loadReleaseData() {
+            try {
+                const baseURL = "https://raw.githubusercontent.com/all-solutions/Flash2MQTT/main/firmware";
+                const firmwareListURL = `${baseURL}/firmware_list.json`;
+                
+                // Lade firmware_list.json
+                const firmwareList = await fetchJSON(firmwareListURL);
+                const releaseData = { release: [] };
+
+                // Gehe jede Firmware im firmware_list.json durch
+                for (const firmware of firmwareList) {
+                    const { name, version } = firmware;
+                    const variantsURL = `${baseURL}/${name}/variants.json`;
+
+                    // Lade variants.json für jede Firmware
+                    try {
+                        const variants = await fetchJSON(variantsURL);
+
+                        // Verarbeite jede Variante
+                        for (const variant of variants) {
+                            const { displayName, file } = variant;
+                            releaseData.release.push({
+                                binary: `${name}${displayName}${version}`,
+                                otaurl: file
+                            });
+                        }
+                    } catch (error) {
+                        console.error(`Fehler beim Laden der Variants für ${name}:`, error);
+                    }
+                }
+
+                // Zeige das Ergebnis an
+                outputElement.textContent = JSON.stringify(releaseData, null, 2);
+            } catch (error) {
+                outputElement.textContent = `Fehler beim Laden der Daten: ${error.message}`;
+            }
+        }
+
+        loadReleaseData();
+    </script>
+</body>
+</html>
