@@ -1,8 +1,8 @@
 name: Generate Release JSON
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Täglich um Mitternacht
+  # schedule:
+    # - cron: '0 0 * * *'  # Täglich um Mitternacht
   push:
     branches:
       - main  # Bei jedem Push auf den main-Zweig
