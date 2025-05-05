@@ -1,10 +1,10 @@
 [
   {
     "displayName": "D1 Mini",
-    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_d1_mini_2.4.0.bin"
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_d1_mini_2.5.0.bin"
   },
   {
     "displayName": "ESP-01",
-    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01_1m_2.4.0.bin"
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01_1m_2.5.0.bin"
   }
 ]
