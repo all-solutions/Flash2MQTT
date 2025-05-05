@@ -1,12 +1,12 @@
 {
   "release": [
     {
-      "binary": "Daly2MQTTD1 Mini2.14.2",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_d1_mini_2.14.2.bin"
+      "binary": "Daly2MQTTD1 Mini2.15.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_d1_mini_2.15.0.bin"
     },
     {
-      "binary": "Daly2MQTTESP-012.14.2",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.14.2.bin"
+      "binary": "Daly2MQTTESP-012.15.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.15.0.bin"
     },
     {
       "binary": "Solar2MQTTD1 Mini1.1.8",
