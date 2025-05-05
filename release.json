@@ -29,8 +29,8 @@
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01_1m_2.4.0.bin"
     },
     {
-      "binary": "Victron2MQTTD1 Mini1.2.5",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Victron2MQTT/Victron2MQTT_d1_mini_1.2.5.bin"
+      "binary": "Victron2MQTTD1 Mini1.3.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Victron2MQTT/Victron2MQTT_d1_mini_1.3.0.bin"
     },
     {
       "binary": "100Balance2MQTTD1 Mini1.0.6",
