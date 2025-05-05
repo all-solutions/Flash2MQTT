@@ -21,12 +21,12 @@
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp12e.bin"
     },
     {
-      "binary": "EPEver2MQTTD1 Mini2.4.0",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_d1_mini_2.4.0.bin"
+      "binary": "EPEver2MQTTD1 Mini2.5.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_d1_mini_2.5.0.bin"
     },
     {
-      "binary": "EPEver2MQTTESP-012.4.0",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01_1m_2.4.0.bin"
+      "binary": "EPEver2MQTTESP-012.5.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/EPEver2MQTT/EPEver2MQTT_esp01_1m_2.5.0.bin"
     },
     {
       "binary": "Victron2MQTTD1 Mini1.3.0",
