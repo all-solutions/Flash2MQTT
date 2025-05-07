@@ -39,14 +39,6 @@
     {
       "binary": "100Daly2MQTTESP-011.0.7",
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/100Daly2MQTT/100Daly2MQTT_esp01_1m_1.0.7.bin"
-    },
-    {
-      "binary": "100Balance2MQTTD1 Mini1.0.6",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/100Balance2MQTT/100Balance2MQTT_d1_mini_1.0.6.bin"
-    },
-    {
-      "binary": "100Balance2MQTTESP-011.0.6",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/100Balance2MQTT/100Balance2MQTT_esp01_1m_1.0.6.bin"
     }
   ]
 }
