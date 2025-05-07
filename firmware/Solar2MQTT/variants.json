@@ -1,14 +1,6 @@
 [
   {
-      "displayName": "D1 Mini",
-      "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_d1_mini.bin"
-  },
-  {
-      "displayName": "ESP-01",
-      "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp01.bin"
-  },
-  {
-      "displayName": "Dongle",
-      "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp12e.bin"
+    "displayName": "D1 Mini",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_d1_mini_1.1.8.bin"
   }
 ]
