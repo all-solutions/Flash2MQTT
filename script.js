@@ -60,7 +60,11 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         variants.forEach(variant => {
             const option = document.createElement('option');
             option.value = variant.file;
-            option.text = variant.displayName;
+            let displayText = variant.displayName;
+            if (displayText === 'D1 Mini') {
+                displayText = 'D1 Mini / NG';
+            }
+            option.text = displayText;
             variantSelect.add(option);
         });
 
