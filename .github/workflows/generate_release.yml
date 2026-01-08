@@ -1,11 +1,12 @@
 name: Generate Release JSON
 
 on:
-  # schedule:
-    # - cron: '0 0 * * *'  # Täglich um Mitternacht
-  push:
-    branches:
-      - main  # Bei jedem Push auf den main-Zweig
+  schedule:
+    - cron: '0 0 * * *'  # Täglich um Mitternacht
+  workflow_dispatch:
+  # push:
+    # branches:
+      # - main  # Bei jedem Push auf den main-Zweig
 
 jobs:
   build:
