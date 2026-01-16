@@ -32,6 +32,10 @@ jobs:
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
           git add release.json
+          if git diff --cached --quiet; then
+            echo "No changes to release.json; skipping commit."
+            exit 0
+          fi
           git commit -m "Update release.json"
           git push
         env:
