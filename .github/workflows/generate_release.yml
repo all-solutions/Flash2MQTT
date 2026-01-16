@@ -4,9 +4,13 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Täglich um Mitternacht
   workflow_dispatch:
-  # push:
-    # branches:
-      # - main  # Bei jedem Push auf den main-Zweig
+  push:
+    branches:
+      - main  # Bei jedem Push auf den main-Zweig
+
+concurrency:
+  group: generate-release
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -23,6 +27,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install node-fetch@2
+
+      # - name: Delay after push
+      #   run: sleep 60
 
       - name: Generate release.json
         run: node generateRelease.js
