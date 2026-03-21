@@ -1,0 +1,10 @@
+[
+  {
+    "displayName": "D1 Mini",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT-ESP8266/Solar2MQTT-ESP8266_d1_mini_1.2.0.bin"
+  },
+  {
+    "displayName": "ESP-01",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT-ESP8266/Solar2MQTT-ESP8266_esp01_1m_1.2.0.bin"
+  }
+]
