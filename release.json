@@ -9,8 +9,12 @@
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.15.1.bin"
     },
     {
-      "binary": "Solar2MQTTD1 Mini1.1.8",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_d1_mini_1.1.8.bin"
+      "binary": "Solar2MQTT-ESP8266D1 Mini1.2.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT-ESP8266/Solar2MQTT-ESP8266_d1_mini_1.2.0.bin"
+    },
+    {
+      "binary": "Solar2MQTT-ESP8266ESP-011.2.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT-ESP8266/Solar2MQTT-ESP8266_esp01_1m_1.2.0.bin"
     },
     {
       "binary": "EPEver2MQTTD1 Mini2.5.5",
