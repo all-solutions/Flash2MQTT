@@ -1,8 +1,32 @@
 const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
 let currentManifestUrl = null;
 
+function elements() {
+    return {
+        firmwareSelect: document.getElementById('firmwareSelect'),
+        variantSelect: document.getElementById('variantSelect'),
+        variantGroup: document.getElementById('variantGroup'),
+        flashButton: document.getElementById('flashButton'),
+        statusMessage: document.getElementById('statusMessage'),
+        selectedFirmware: document.getElementById('selectedFirmware'),
+        selectedVariant: document.getElementById('selectedVariant'),
+        selectedChip: document.getElementById('selectedChip')
+    };
+}
+
+function updateSummary({ firmware = 'Not selected', variant = 'Not selected', chip = 'Unknown' } = {}) {
+    const { selectedFirmware, selectedVariant, selectedChip } = elements();
+    selectedFirmware.textContent = firmware;
+    selectedVariant.textContent = variant;
+    selectedChip.textContent = chip;
+}
+
+function setStatus(message) {
+    elements().statusMessage.textContent = message;
+}
+
 function resetFlashButton() {
-    const flashButton = document.getElementById('flashButton');
+    const { flashButton } = elements();
 
     if (currentManifestUrl) {
         URL.revokeObjectURL(currentManifestUrl);
@@ -14,27 +38,32 @@ function resetFlashButton() {
     flashButton.manifest = '';
 }
 
-// Funktion zum Parsen der URL-Parameter
+function resetVariantSelection() {
+    const { variantSelect, variantGroup } = elements();
+    variantSelect.innerHTML = '<option value="">Please select a variant</option>';
+    variantGroup.classList.remove('is-visible');
+    updateSummary({ variant: 'Not selected', chip: 'Unknown' });
+    resetFlashButton();
+}
+
 function getURLParameter(name) {
     return new URLSearchParams(window.location.search).get(name);
 }
 
 async function fetchFirmwareList() {
-    const firmwareSelect = document.getElementById('firmwareSelect');
+    const { firmwareSelect } = elements();
 
-    // Abrufen der Firmware-Liste vom zentralen Repository
     try {
         const response = await fetch(`${centralRepoBaseURL}/firmware_list.json`);
         const firmwareList = await response.json();
 
-        firmwareList.forEach(firmware => {
+        firmwareList.forEach((firmware) => {
             const option = document.createElement('option');
             option.value = firmware.name;
             option.text = `${firmware.name} - Version ${firmware.version}`;
             firmwareSelect.add(option);
         });
 
-        // Prüfen, ob ein 'get'-Parameter vorhanden ist
         const preselectFirmware = getURLParameter('get');
         if (preselectFirmware) {
             firmwareSelect.value = preselectFirmware;
@@ -42,6 +71,7 @@ async function fetchFirmwareList() {
         }
     } catch (err) {
         console.error('Fehler beim Abrufen der Firmware-Liste:', err);
+        setStatus('Unable to load firmware list right now.');
     }
 }
 
@@ -49,25 +79,24 @@ fetchFirmwareList();
 
 document.getElementById('firmwareSelect').addEventListener('change', async function () {
     const firmwareName = this.value;
-    const variantSelect = document.getElementById('variantSelect');
-    const variantLabel = document.querySelector('label[for="variantSelect"]');
+    const { variantSelect, variantGroup } = elements();
 
-    // Variante zurücksetzen
-    variantSelect.style.display = 'none';
-    variantLabel.style.display = 'none';
-    variantSelect.innerHTML = '<option value="">Please select a variant</option>';
-    resetFlashButton();
+    resetVariantSelection();
 
     if (!firmwareName) {
+        updateSummary({ firmware: 'Not selected' });
+        setStatus('Select a firmware to load available variants.');
         return;
     }
 
-    // Abrufen der Varianten für die ausgewählte Firmware
+    updateSummary({ firmware: firmwareName });
+    setStatus('Loading variants for the selected firmware...');
+
     try {
         const response = await fetch(`${centralRepoBaseURL}/${firmwareName}/variants.json`);
         const variants = await response.json();
 
-        variants.forEach(variant => {
+        variants.forEach((variant) => {
             const option = document.createElement('option');
             option.value = variant.file;
             option.dataset.chipFamily = variant.chipFamily || 'ESP8266';
@@ -81,10 +110,9 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
             variantSelect.add(option);
         });
 
-        variantSelect.style.display = 'block';
-        variantLabel.style.display = 'block';
+        variantGroup.classList.add('is-visible');
+        setStatus('Select a hardware variant to generate the flashing manifest.');
 
-        // Prüfen, ob ein 'variant'-Parameter vorhanden ist
         const preselectVariant = getURLParameter('variant');
         if (preselectVariant) {
             variantSelect.value = preselectVariant;
@@ -92,31 +120,34 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         }
     } catch (err) {
         console.error('Fehler beim Abrufen der Varianten:', err);
+        setStatus('Variants could not be loaded for the selected firmware.');
     }
 });
 
 document.getElementById('variantSelect').addEventListener('change', function () {
     const firmwareUrl = this.value;
-    const firmwareSelect = document.getElementById('firmwareSelect');
+    const { firmwareSelect, flashButton } = elements();
     const firmwareName = firmwareSelect.options[firmwareSelect.selectedIndex].value;
     const selectedOption = this.options[this.selectedIndex];
     const chipFamily = selectedOption?.dataset.chipFamily || 'ESP8266';
-    const flashButton = document.getElementById('flashButton');
+    const variantName = selectedOption?.text || 'Not selected';
 
     if (!firmwareUrl) {
+        updateSummary({ firmware: firmwareName || 'Not selected', variant: 'Not selected', chip: 'Unknown' });
+        setStatus('Select a hardware variant to enable flashing.');
         resetFlashButton();
         return;
     }
 
     const manifest = {
-        "name": `${firmwareName} Firmware`,
-        "builds": [
+        name: `${firmwareName} Firmware`,
+        builds: [
             {
-                "chipFamily": chipFamily,
-                "parts": [
+                chipFamily,
+                parts: [
                     {
-                        "path": firmwareUrl,
-                        "offset": 0
+                        path: firmwareUrl,
+                        offset: 0
                     }
                 ]
             }
@@ -130,4 +161,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
     flashButton.setAttribute('enabled', 'true');
+
+    updateSummary({ firmware: firmwareName, variant: variantName, chip: chipFamily });
+    setStatus('Ready. Press Connect and choose the serial port for your device.');
 });

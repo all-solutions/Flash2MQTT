@@ -2,29 +2,123 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>ESP Flash Tool</title>
-    <!-- Einbindung des ESP Web Tools -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash2MQTT Installer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="https://unpkg.com/esp-web-tools@8.0.3/dist/web/install-button.js?module"></script>
 </head>
 <body>
-    <h1>ESP Flash Tool</h1>
-    <!-- Firmware-Auswahl -->
-    <label for="firmwareSelect">Firmware auswählen:</label>
-    <select id="firmwareSelect">
-        <option value="">Bitte wählen</option>
-    </select>
+    <canvas id="backgroundCanvas" aria-hidden="true"></canvas>
 
-    <!-- Varianten-Auswahl -->
-    <label for="variantSelect" style="display: none;">Variante auswählen:</label>
-    <select id="variantSelect" style="display: none;">
-        <option value="">Bitte Variante wählen</option>
-    </select>
+    <main class="page-shell">
+        <header class="hero-card">
+            <div class="brand-row">
+                <div class="brand-mark" aria-hidden="true">F2M</div>
+                <div class="brand-copy">
+                    <p class="eyebrow">Browser Flasher</p>
+                    <h1>Flash2MQTT Installer</h1>
+                    <p class="hero-text">
+                        *2MQTT Firmware direkt im Browser auf ESP8266- und ESP32-Boards flashen.
+                    </p>
+                </div>
+            </div>
 
-    <!-- Installations-Button von ESP Web Tools -->
-    <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+            <div class="hero-meta">
+                <div class="meta-pill">USB / Seriell</div>
+                <div class="meta-pill">ESP8266 + ESP32</div>
+                <div class="meta-pill">Ohne lokale Tools</div>
+            </div>
+        </header>
 
-    <div id="status"></div>
+        <section class="content-grid">
+            <article class="panel panel-accent">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Ablauf</p>
+                    <h2>In drei Schritten flashen</h2>
+                </div>
 
+                <ol class="step-list">
+                    <li>
+                        <span class="step-index">01</span>
+                        <div>
+                            <strong>Gerät verbinden</strong>
+                            <p>Per USB oder USB-Seriell-Adapter anschließen und falls nötig in den Flash-Modus versetzen.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-index">02</span>
+                        <div>
+                            <strong>Firmware und Board wählen</strong>
+                            <p>Die passende Firmware-Familie und anschließend die genaue Hardware-Variante auswählen.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-index">03</span>
+                        <div>
+                            <strong>Web-Flasher starten</strong>
+                            <p>Auf Connect klicken, den richtigen Port wählen und den Upload starten.</p>
+                        </div>
+                    </li>
+                </ol>
+            </article>
+
+            <article class="panel installer-panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Installer</p>
+                    <h2>Ziel auswählen</h2>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field-group">
+                        <label for="firmwareSelect">Firmware</label>
+                        <select id="firmwareSelect">
+                            <option value="">Bitte wählen</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group" id="variantGroup">
+                        <label for="variantSelect">Variante</label>
+                        <select id="variantSelect">
+                            <option value="">Bitte Variante wählen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="selection-summary" id="selectionSummary">
+                    <div class="summary-item">
+                        <span class="summary-label">Firmware</span>
+                        <strong id="selectedFirmware">Nicht gewählt</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Variante</span>
+                        <strong id="selectedVariant">Nicht gewählt</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Chip</span>
+                        <strong id="selectedChip">Unbekannt</strong>
+                    </div>
+                </div>
+
+                <div class="flash-area">
+                    <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+                    <p class="status-text" id="statusMessage">Wähle zuerst eine Firmware, um die Varianten zu laden.</p>
+                </div>
+            </article>
+        </section>
+
+        <footer class="page-footer">
+            <p>*2MQTT Firmware Installer inspiriert von ESP Web Tools</p>
+            <p>&copy; 2024-<span id="currentYear"></span> by all-solutions</p>
+        </footer>
+    </main>
+
+    <script src="background.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

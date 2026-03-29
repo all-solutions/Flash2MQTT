@@ -2,120 +2,124 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Install *2MQTT Firmware</title>
-    <!-- Favicon einbinden -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash2MQTT Installer</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Einbindung des ESP Web Tools -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <script type="module" src="https://unpkg.com/esp-web-tools@latest/dist/web/install-button.js?module"></script>
-    <style>
-        /* Zentriere den Inhalt */
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            text-align: center;
-        }
-        label, select, button, esp-web-install-button {
-            display: block;
-            margin: 15px auto;
-            text-align: center;
-        }
-        /* Abstand zwischen Dropdowns und Connect-Button */
-        .spacer {
-            height: 60px;
-        }
-        /* Stil für den Connect-Button im deaktivierten Zustand */
-        esp-web-install-button::part(button) {
-            background-color: grey;
-            pointer-events: none;
-            opacity: 0.6;
-            width: auto;
-        }
-        /* Stil für den Connect-Button im aktivierten Zustand */
-        esp-web-install-button[enabled]::part(button) {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            pointer-events: auto;
-            opacity: 1;
-        }
-        /* Stil für die Anweisungen */
-        .instructions {
-            text-align: left;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-        /* Stil für die Trennlinie */
-        .divider {
-            border-top: 1px solid grey;
-            width: 60%;
-            margin: 30px auto;
-        }
-        /* Stil für den Footer-Text */
-        .footer-text {
-            color: grey;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-        /* Überschreibe veraltete Media Features */
-        @media (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            /* Leerer Block, um das veraltete Feature zu neutralisieren */
-        }
-        /* Verwende standardisiertes forced-colors Media Feature */
-        @media (forced-colors: active) {
-            /* Anpassungen für Benutzer mit aktiviertem Forced Colors Mode */
-            body {
-                background: Window;
-                color: WindowText;
-            }
-            /* Weitere notwendige Anpassungen */
-        }
-    </style>
 </head>
 <body>
-    <h1>Install *2MQTT Firmware</h1>
+    <canvas id="backgroundCanvas" aria-hidden="true"></canvas>
 
-    <div class="instructions">
-        <ol>
-            <li>Connect the ESP device to your computer using USB or serial-to-USB adapter</li>
-            <li>Select the firmware variant suitable for your device</li>
-            <li>Hit "Connect" and select the correct port</li>
-        </ol>
-    </div>
+    <main class="page-shell">
+        <header class="hero-card">
+            <div class="brand-row">
+                <div class="brand-mark" aria-hidden="true">F2M</div>
+                <div class="brand-copy">
+                    <p class="eyebrow">Browser Flasher</p>
+                    <h1>Flash2MQTT Installer</h1>
+                    <p class="hero-text">
+                        Install *2MQTT firmware directly from your browser for ESP8266 and ESP32 boards.
+                    </p>
+                </div>
+            </div>
 
-    <!-- Firmware-Auswahl -->
-    <label for="firmwareSelect">Select Firmware:</label>
-    <select id="firmwareSelect">
-        <option value="">Please select</option>
-    </select>
+            <div class="hero-meta">
+                <div class="meta-pill">USB / Serial</div>
+                <div class="meta-pill">ESP8266 + ESP32</div>
+                <div class="meta-pill">No local tools required</div>
+            </div>
+        </header>
 
-    <!-- Varianten-Auswahl -->
-    <label for="variantSelect" style="display: none;">Select Variant:</label>
-    <select id="variantSelect" style="display: none;">
-        <option value="">Please select a variant</option>
-    </select>
+        <section class="content-grid">
+            <article class="panel panel-accent">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Workflow</p>
+                    <h2>Flash in three steps</h2>
+                </div>
 
-    <!-- Abstandshalter -->
-    <div class="spacer"></div>
+                <ol class="step-list">
+                    <li>
+                        <span class="step-index">01</span>
+                        <div>
+                            <strong>Connect your device</strong>
+                            <p>Use USB or a serial-to-USB adapter and put the board into flash mode if needed.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-index">02</span>
+                        <div>
+                            <strong>Choose firmware and board</strong>
+                            <p>Select the matching firmware family and the exact hardware variant.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="step-index">03</span>
+                        <div>
+                            <strong>Start the web flasher</strong>
+                            <p>Press Connect, pick the serial port, and let ESP Web Tools handle the upload.</p>
+                        </div>
+                    </li>
+                </ol>
+            </article>
 
-    <!-- Installations-Button von ESP Web Tools -->
-    <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+            <article class="panel installer-panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker">Installer</p>
+                    <h2>Select your target</h2>
+                </div>
 
-    <!-- Trennlinie -->
-    <div class="divider"></div>
+                <div class="field-grid">
+                    <div class="field-group">
+                        <label for="firmwareSelect">Firmware</label>
+                        <select id="firmwareSelect">
+                            <option value="">Please select</option>
+                        </select>
+                    </div>
 
-    <!-- Footer-Text -->
-    <p class="footer-text">
-        *2MQTT Firmware Installer inspired by ESP Web Tools<br>
-        &copy; 2024-<span id="currentYear"></span> by all-solutions
-    </p>
+                    <div class="field-group" id="variantGroup">
+                        <label for="variantSelect">Variant</label>
+                        <select id="variantSelect">
+                            <option value="">Please select a variant</option>
+                        </select>
+                    </div>
+                </div>
 
-    <div id="status"></div>
+                <div class="selection-summary" id="selectionSummary">
+                    <div class="summary-item">
+                        <span class="summary-label">Firmware</span>
+                        <strong id="selectedFirmware">Not selected</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Variant</span>
+                        <strong id="selectedVariant">Not selected</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Chip</span>
+                        <strong id="selectedChip">Unknown</strong>
+                    </div>
+                </div>
 
+                <div class="flash-area">
+                    <esp-web-install-button id="flashButton" manifest="" disabled></esp-web-install-button>
+                    <p class="status-text" id="statusMessage">Select a firmware to load available variants.</p>
+                </div>
+            </article>
+        </section>
+
+        <footer class="page-footer">
+            <p>*2MQTT Firmware Installer inspired by ESP Web Tools</p>
+            <p>&copy; 2024-<span id="currentYear"></span> by all-solutions</p>
+        </footer>
+    </main>
+
+    <script src="background.js"></script>
     <script src="script.js"></script>
     <script>
-        // Setze das aktuelle Jahr im Footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
-
