@@ -214,7 +214,7 @@ body {
     gap: 16px;
 }
 
-.step-list li {
+.step-card {
     display: grid;
     grid-template-columns: 52px 1fr;
     gap: 14px;
@@ -223,6 +223,18 @@ body {
     border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(160, 214, 255, 0.1);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-card.is-active {
+    border-color: rgba(132, 211, 255, 0.45);
+    background: linear-gradient(180deg, rgba(83, 184, 255, 0.12), rgba(197, 212, 135, 0.08));
+    box-shadow: inset 0 0 0 1px rgba(132, 211, 255, 0.08);
+}
+
+.step-card.is-complete {
+    border-color: rgba(197, 212, 135, 0.34);
+    background: linear-gradient(180deg, rgba(197, 212, 135, 0.14), rgba(83, 184, 255, 0.06));
 }
 
 .step-index {
@@ -235,6 +247,25 @@ body {
     color: var(--primary-strong);
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.step-card.is-active .step-index {
+    background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+    color: #07131b;
+    box-shadow: 0 10px 22px rgba(83, 184, 255, 0.22);
+    transform: translateY(-1px);
+}
+
+.step-card.is-complete .step-index {
+    background: linear-gradient(135deg, var(--highlight), #dce8a4);
+    color: #142019;
+    box-shadow: 0 10px 22px rgba(197, 212, 135, 0.2);
+}
+
+.step-card.is-active strong,
+.step-card.is-complete strong {
+    color: var(--text);
 }
 
 .step-list strong {
@@ -426,7 +457,7 @@ esp-web-install-button:not([enabled])::part(button) {
     }
 
     .selection-summary,
-    .step-list li {
+    .step-card {
         grid-template-columns: 1fr;
     }
 
