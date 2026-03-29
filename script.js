@@ -12,10 +12,10 @@ const i18n = {
         metaTools: 'No local tools required',
         workflowKicker: 'Workflow',
         workflowTitle: 'Flash in three steps',
-        step1Title: 'Connect your device',
-        step1Text: 'Use USB or a serial-to-USB adapter and put the board into flash mode if needed.',
-        step2Title: 'Choose firmware and board',
-        step2Text: 'Select the matching firmware family and the exact hardware variant.',
+        step1Title: 'Choose firmware and board',
+        step1Text: 'Select the matching firmware family and the exact hardware variant.',
+        step2Title: 'Connect your device',
+        step2Text: 'Use USB or a serial-to-USB adapter and put the board into flash mode if needed.',
         step3Title: 'Start the web flasher',
         step3Text: 'Press Connect, pick the serial port, and let ESP Web Tools handle the upload.',
         installerKicker: 'Installer',
@@ -48,10 +48,10 @@ const i18n = {
         metaTools: 'Ohne lokale Tools',
         workflowKicker: 'Ablauf',
         workflowTitle: 'In drei Schritten flashen',
-        step1Title: 'Gerät verbinden',
-        step1Text: 'Per USB oder USB-Seriell-Adapter anschließen und falls nötig in den Flash-Modus versetzen.',
-        step2Title: 'Firmware und Board wählen',
-        step2Text: 'Die passende Firmware-Familie und anschließend die genaue Hardware-Variante auswählen.',
+        step1Title: 'Firmware und Board wählen',
+        step1Text: 'Die passende Firmware-Familie und anschließend die genaue Hardware-Variante auswählen.',
+        step2Title: 'Gerät verbinden',
+        step2Text: 'Per USB oder USB-Seriell-Adapter anschließen und falls nötig in den Flash-Modus versetzen.',
         step3Title: 'Web-Flasher starten',
         step3Text: 'Auf Connect klicken, den richtigen Port wählen und den Upload starten.',
         installerKicker: 'Installer',
@@ -172,6 +172,7 @@ function resetFlashButton() {
     }
 
     flashButton.disabled = true;
+    flashButton.setAttribute('disabled', '');
     flashButton.removeAttribute('enabled');
     flashButton.manifest = '';
 }
@@ -316,6 +317,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
+    flashButton.removeAttribute('disabled');
     flashButton.setAttribute('enabled', 'true');
 
     currentVariant = variantName;
