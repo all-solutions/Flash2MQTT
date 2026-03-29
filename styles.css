@@ -331,6 +331,10 @@ esp-web-install-button {
     display: block;
 }
 
+esp-web-install-button[data-state="disabled"] {
+    pointer-events: none;
+}
+
 esp-web-install-button::part(button) {
     width: 100%;
     min-height: 58px;
@@ -350,6 +354,7 @@ esp-web-install-button:not([enabled])::part(button) {
     box-shadow: none;
     opacity: 0.75;
     pointer-events: none;
+    cursor: not-allowed;
 }
 
 .status-text {

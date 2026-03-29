@@ -120,6 +120,28 @@ function setStatus(key) {
     elements().statusMessage.textContent = t(key);
 }
 
+function setFlashButtonInteractive(isInteractive) {
+    const { flashButton } = elements();
+
+    flashButton.disabled = !isInteractive;
+    flashButton.toggleAttribute('disabled', !isInteractive);
+    flashButton.dataset.state = isInteractive ? 'enabled' : 'disabled';
+    flashButton.style.pointerEvents = isInteractive ? 'auto' : 'none';
+    flashButton.style.cursor = isInteractive ? 'pointer' : 'not-allowed';
+    flashButton.setAttribute('aria-disabled', isInteractive ? 'false' : 'true');
+
+    if (isInteractive) {
+        flashButton.removeAttribute('tabindex');
+        flashButton.removeAttribute('inert');
+        flashButton.setAttribute('enabled', 'true');
+        return;
+    }
+
+    flashButton.setAttribute('tabindex', '-1');
+    flashButton.setAttribute('inert', '');
+    flashButton.removeAttribute('enabled');
+}
+
 function updateSummary() {
     const { selectedFirmware, selectedVariant, selectedChip } = elements();
     selectedFirmware.textContent = currentFirmware || t('notSelected');
@@ -171,10 +193,8 @@ function resetFlashButton() {
         currentManifestUrl = null;
     }
 
-    flashButton.disabled = true;
-    flashButton.setAttribute('disabled', '');
-    flashButton.removeAttribute('enabled');
     flashButton.manifest = '';
+    setFlashButtonInteractive(false);
 }
 
 function resetVariantSelection() {
@@ -316,9 +336,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     currentManifestUrl = manifestUrl;
 
     flashButton.manifest = manifestUrl;
-    flashButton.disabled = false;
-    flashButton.removeAttribute('disabled');
-    flashButton.setAttribute('enabled', 'true');
+    setFlashButtonInteractive(true);
 
     currentVariant = variantName;
     currentChip = chipFamily;
@@ -328,4 +346,5 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
 bindLanguageButtons();
 applyLanguage(currentLanguage);
+setFlashButtonInteractive(false);
 fetchFirmwareList();
