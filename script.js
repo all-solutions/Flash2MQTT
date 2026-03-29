@@ -82,6 +82,7 @@ let currentFirmware = '';
 let currentVariant = '';
 let currentChip = '';
 let currentStatusKey = 'statusLoadFirmware';
+let hasStartedConnectFlow = false;
 
 function elements() {
     return {
@@ -156,12 +157,13 @@ function updateSummary() {
 function updateStepStates() {
     const { stepCard1, stepCard2, stepCard3 } = elements();
     const step1Done = Boolean(currentFirmware && currentVariant);
-    const step2Active = step1Done && currentStatusKey !== 'statusReady';
-    const step3Active = currentStatusKey === 'statusReady';
+    const step2Active = step1Done && hasStartedConnectFlow;
+    const step2Done = step1Done && hasStartedConnectFlow;
+    const step3Active = false;
 
     [
         [stepCard1, step1Done, !step1Done],
-        [stepCard2, step1Done && step3Active, step2Active],
+        [stepCard2, step2Done, step2Active],
         [stepCard3, false, step3Active]
     ].forEach(([node, complete, active]) => {
         if (!node) {
@@ -227,6 +229,7 @@ function resetVariantSelection() {
     variantGroup.classList.remove('is-visible');
     currentVariant = '';
     currentChip = '';
+    hasStartedConnectFlow = false;
     updateSummary();
     resetFlashButton();
 }
@@ -334,6 +337,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     if (!firmwareUrl) {
         currentVariant = '';
         currentChip = '';
+        hasStartedConnectFlow = false;
         updateSummary();
         setStatus('statusEnableFlash');
         resetFlashButton();
@@ -364,8 +368,18 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     currentVariant = variantName;
     currentChip = chipFamily;
+    hasStartedConnectFlow = false;
     updateSummary();
     setStatus('statusReady');
+});
+
+document.getElementById('flashButton').addEventListener('click', function () {
+    if (this.dataset.state !== 'enabled') {
+        return;
+    }
+
+    hasStartedConnectFlow = true;
+    updateStepStates();
 });
 
 bindLanguageButtons();
