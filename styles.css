@@ -68,6 +68,13 @@ body {
     overflow: hidden;
 }
 
+.hero-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+}
+
 .hero-card::after {
     content: "";
     position: absolute;
@@ -83,6 +90,41 @@ body {
     display: flex;
     gap: 18px;
     align-items: flex-start;
+}
+
+.language-toggle {
+    display: inline-flex;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    flex: 0 0 auto;
+}
+
+.lang-button {
+    appearance: none;
+    border: 0;
+    min-width: 54px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-soft);
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.lang-button:hover {
+    color: var(--text);
+}
+
+.lang-button.is-active {
+    background: linear-gradient(135deg, var(--primary), var(--highlight));
+    color: #07131b;
+    box-shadow: 0 8px 24px rgba(83, 184, 255, 0.18);
 }
 
 .brand-mark {
@@ -354,9 +396,17 @@ esp-web-install-button:not([enabled])::part(button) {
         border-radius: 22px;
     }
 
+    .hero-topbar {
+        flex-direction: column;
+    }
+
     .brand-row {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .language-toggle {
+        align-self: flex-start;
     }
 
     .brand-mark {
