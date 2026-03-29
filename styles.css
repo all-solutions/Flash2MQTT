@@ -329,10 +329,14 @@ select option {
 
 esp-web-install-button {
     display: block;
+    border-radius: 16px;
+    transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 esp-web-install-button[data-state="disabled"] {
     pointer-events: none;
+    opacity: 0.82;
+    filter: grayscale(0.35) saturate(0.7);
 }
 
 esp-web-install-button::part(button) {
@@ -349,12 +353,13 @@ esp-web-install-button::part(button) {
 }
 
 esp-web-install-button:not([enabled])::part(button) {
-    background: linear-gradient(135deg, rgba(111, 136, 152, 0.52), rgba(80, 96, 107, 0.56));
-    color: rgba(238, 245, 247, 0.72);
+    background: linear-gradient(135deg, #74828d, #56626c);
+    color: rgba(238, 245, 247, 0.82);
     box-shadow: none;
-    opacity: 0.75;
+    opacity: 1;
     pointer-events: none;
     cursor: not-allowed;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .status-text {
