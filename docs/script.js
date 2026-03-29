@@ -1,4 +1,17 @@
 const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
+let currentManifestUrl = null;
+
+function resetFlashButton() {
+    const flashButton = document.getElementById('flashButton');
+
+    if (currentManifestUrl) {
+        URL.revokeObjectURL(currentManifestUrl);
+        currentManifestUrl = null;
+    }
+
+    flashButton.disabled = true;
+    flashButton.manifest = '';
+}
 
 async function fetchFirmwareList() {
     const firmwareSelect = document.getElementById('firmwareSelect');
@@ -24,13 +37,13 @@ fetchFirmwareList();
 document.getElementById('firmwareSelect').addEventListener('change', async function () {
     const firmwareName = this.value;
     const variantSelect = document.getElementById('variantSelect');
-    const flashButton = document.getElementById('flashButton');
+    const variantLabel = document.querySelector('label[for="variantSelect"]');
 
     // Variante zurücksetzen
     variantSelect.style.display = 'none';
+    variantLabel.style.display = 'none';
     variantSelect.innerHTML = '<option value="">Bitte Variante wählen</option>';
-    flashButton.disabled = true;
-    flashButton.manifest = '';
+    resetFlashButton();
 
     if (!firmwareName) {
         return;
@@ -44,13 +57,13 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         variants.forEach(variant => {
             const option = document.createElement('option');
             option.value = variant.file;
+            option.dataset.chipFamily = variant.chipFamily || 'ESP8266';
             option.text = variant.displayName;
             variantSelect.add(option);
         });
 
         variantSelect.style.display = 'inline';
-        document.querySelector('label[for="variantSelect"]').style.display = 'inline';
-
+        variantLabel.style.display = 'inline';
     } catch (err) {
         console.error('Fehler beim Abrufen der Varianten:', err);
     }
@@ -58,19 +71,20 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
 
 document.getElementById('variantSelect').addEventListener('change', function () {
     const firmwareUrl = this.value;
+    const selectedOption = this.options[this.selectedIndex];
+    const chipFamily = selectedOption?.dataset.chipFamily || 'ESP8266';
     const flashButton = document.getElementById('flashButton');
 
     if (!firmwareUrl) {
-        flashButton.disabled = true;
-        flashButton.manifest = '';
+        resetFlashButton();
         return;
     }
 
     const manifest = {
-        "name": "ESP8266 Flash Tool",
+        "name": "ESP Flash Tool",
         "builds": [
             {
-                "chipFamily": "ESP8266",
+                "chipFamily": chipFamily,
                 "parts": [
                     {
                         "path": firmwareUrl,
@@ -83,8 +97,8 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
     const manifestUrl = URL.createObjectURL(blob);
+    currentManifestUrl = manifestUrl;
 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
 });
-

@@ -9,6 +9,22 @@
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.15.1.bin"
     },
     {
+      "binary": "Solar2MQTTWemos D1 Mini322.0.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_wemos_d1_mini32_V2.0.0.bin"
+    },
+    {
+      "binary": "Solar2MQTTESP32-C3 SuperMini2.0.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp32c3_supermini_V2.0.0.bin"
+    },
+    {
+      "binary": "Solar2MQTTESP32-S3 SuperMini2.0.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp32s3_supermini_V2.0.0.bin"
+    },
+    {
+      "binary": "Solar2MQTTWaveshare ESP32-S3 ETH2.0.0",
+      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_waveshare_esp32_s3_eth_V2.0.0.bin"
+    },
+    {
       "binary": "Solar2MQTT-ESP8266D1 Mini1.2.0",
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT-ESP8266/Solar2MQTT-ESP8266_d1_mini_1.2.0.bin"
     },

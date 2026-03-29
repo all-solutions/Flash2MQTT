@@ -1,4 +1,18 @@
 const centralRepoBaseURL = 'https://all-solutions.github.io/Flash2MQTT/firmware';
+let currentManifestUrl = null;
+
+function resetFlashButton() {
+    const flashButton = document.getElementById('flashButton');
+
+    if (currentManifestUrl) {
+        URL.revokeObjectURL(currentManifestUrl);
+        currentManifestUrl = null;
+    }
+
+    flashButton.disabled = true;
+    flashButton.removeAttribute('enabled');
+    flashButton.manifest = '';
+}
 
 // Funktion zum Parsen der URL-Parameter
 function getURLParameter(name) {
@@ -24,7 +38,6 @@ async function fetchFirmwareList() {
         const preselectFirmware = getURLParameter('get');
         if (preselectFirmware) {
             firmwareSelect.value = preselectFirmware;
-            // Event manuell auslösen
             firmwareSelect.dispatchEvent(new Event('change'));
         }
     } catch (err) {
@@ -37,16 +50,13 @@ fetchFirmwareList();
 document.getElementById('firmwareSelect').addEventListener('change', async function () {
     const firmwareName = this.value;
     const variantSelect = document.getElementById('variantSelect');
-    const flashButton = document.getElementById('flashButton');
     const variantLabel = document.querySelector('label[for="variantSelect"]');
 
     // Variante zurücksetzen
     variantSelect.style.display = 'none';
     variantLabel.style.display = 'none';
     variantSelect.innerHTML = '<option value="">Please select a variant</option>';
-    flashButton.disabled = true;
-    flashButton.removeAttribute('enabled');
-    flashButton.manifest = '';
+    resetFlashButton();
 
     if (!firmwareName) {
         return;
@@ -60,10 +70,13 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         variants.forEach(variant => {
             const option = document.createElement('option');
             option.value = variant.file;
+            option.dataset.chipFamily = variant.chipFamily || 'ESP8266';
+
             let displayText = variant.displayName;
             if (displayText === 'D1 Mini') {
                 displayText = 'D1 Mini / NG';
             }
+
             option.text = displayText;
             variantSelect.add(option);
         });
@@ -77,7 +90,6 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
             variantSelect.value = preselectVariant;
             variantSelect.dispatchEvent(new Event('change'));
         }
-
     } catch (err) {
         console.error('Fehler beim Abrufen der Varianten:', err);
     }
@@ -85,14 +97,14 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
 
 document.getElementById('variantSelect').addEventListener('change', function () {
     const firmwareUrl = this.value;
-    const flashButton = document.getElementById('flashButton');
     const firmwareSelect = document.getElementById('firmwareSelect');
     const firmwareName = firmwareSelect.options[firmwareSelect.selectedIndex].value;
+    const selectedOption = this.options[this.selectedIndex];
+    const chipFamily = selectedOption?.dataset.chipFamily || 'ESP8266';
+    const flashButton = document.getElementById('flashButton');
 
     if (!firmwareUrl) {
-        flashButton.disabled = true;
-        flashButton.removeAttribute('enabled');
-        flashButton.manifest = '';
+        resetFlashButton();
         return;
     }
 
@@ -100,7 +112,7 @@ document.getElementById('variantSelect').addEventListener('change', function () 
         "name": `${firmwareName} Firmware`,
         "builds": [
             {
-                "chipFamily": "ESP8266",
+                "chipFamily": chipFamily,
                 "parts": [
                     {
                         "path": firmwareUrl,
@@ -113,9 +125,9 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
     const manifestUrl = URL.createObjectURL(blob);
+    currentManifestUrl = manifestUrl;
 
     flashButton.manifest = manifestUrl;
     flashButton.disabled = false;
     flashButton.setAttribute('enabled', 'true');
 });
-
