@@ -82,7 +82,6 @@ let currentFirmware = '';
 let currentVariant = '';
 let currentChip = '';
 let currentStatusKey = 'statusLoadFirmware';
-let hasStartedConnectFlow = false;
 
 function elements() {
     return {
@@ -94,9 +93,6 @@ function elements() {
         selectedFirmware: document.getElementById('selectedFirmware'),
         selectedVariant: document.getElementById('selectedVariant'),
         selectedChip: document.getElementById('selectedChip'),
-        stepCard1: document.getElementById('stepCard1'),
-        stepCard2: document.getElementById('stepCard2'),
-        stepCard3: document.getElementById('stepCard3'),
         langButtons: Array.from(document.querySelectorAll('.lang-button'))
     };
 }
@@ -122,7 +118,6 @@ function getInitialLanguage() {
 function setStatus(key) {
     currentStatusKey = key;
     elements().statusMessage.textContent = t(key);
-    updateStepStates();
 }
 
 function setFlashButtonInteractive(isInteractive) {
@@ -152,27 +147,6 @@ function updateSummary() {
     selectedFirmware.textContent = currentFirmware || t('notSelected');
     selectedVariant.textContent = currentVariant || t('notSelected');
     selectedChip.textContent = currentChip || t('unknown');
-}
-
-function updateStepStates() {
-    const { stepCard1, stepCard2, stepCard3 } = elements();
-    const step1Done = Boolean(currentFirmware && currentVariant);
-    const step2Active = step1Done && hasStartedConnectFlow;
-    const step2Done = step1Done && hasStartedConnectFlow;
-    const step3Active = false;
-
-    [
-        [stepCard1, step1Done, !step1Done],
-        [stepCard2, step2Done, step2Active],
-        [stepCard3, false, step3Active]
-    ].forEach(([node, complete, active]) => {
-        if (!node) {
-            return;
-        }
-
-        node.classList.toggle('is-complete', complete);
-        node.classList.toggle('is-active', active);
-    });
 }
 
 function translateStaticContent() {
@@ -229,7 +203,6 @@ function resetVariantSelection() {
     variantGroup.classList.remove('is-visible');
     currentVariant = '';
     currentChip = '';
-    hasStartedConnectFlow = false;
     updateSummary();
     resetFlashButton();
 }
@@ -337,7 +310,6 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     if (!firmwareUrl) {
         currentVariant = '';
         currentChip = '';
-        hasStartedConnectFlow = false;
         updateSummary();
         setStatus('statusEnableFlash');
         resetFlashButton();
@@ -368,18 +340,8 @@ document.getElementById('variantSelect').addEventListener('change', function () 
 
     currentVariant = variantName;
     currentChip = chipFamily;
-    hasStartedConnectFlow = false;
     updateSummary();
     setStatus('statusReady');
-});
-
-document.getElementById('flashButton').addEventListener('click', function () {
-    if (this.dataset.state !== 'enabled') {
-        return;
-    }
-
-    hasStartedConnectFlow = true;
-    updateStepStates();
 });
 
 bindLanguageButtons();
