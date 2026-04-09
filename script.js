@@ -236,6 +236,10 @@ function resolveChipFamily(variant) {
         return 'ESP32-H2';
     }
 
+    if (searchText.includes('D1 MINI32') || searchText.includes('MINI32')) {
+        return 'ESP32';
+    }
+
     if (searchText.includes('ESP32')) {
         return 'ESP32';
     }
