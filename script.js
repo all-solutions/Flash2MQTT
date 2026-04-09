@@ -206,7 +206,7 @@ function getURLParameter(name) {
 }
 
 function resolveChipFamily(variant) {
-    if (variant.chipFamily) {
+    if (variant.chipFamily && variant.chipFamily !== 'ESP8266') {
         return variant.chipFamily;
     }
 
@@ -338,8 +338,12 @@ document.getElementById('variantSelect').addEventListener('change', function () 
     const { firmwareSelect, flashButton } = elements();
     const firmwareName = firmwareSelect.options[firmwareSelect.selectedIndex].value;
     const selectedOption = this.options[this.selectedIndex];
-    const chipFamily = selectedOption?.dataset.chipFamily || 'ESP8266';
     const variantName = selectedOption?.text || '';
+    const chipFamily = resolveChipFamily({
+        chipFamily: selectedOption?.dataset.chipFamily || '',
+        displayName: variantName,
+        file: firmwareUrl
+    });
 
     currentFirmware = firmwareName || '';
 
