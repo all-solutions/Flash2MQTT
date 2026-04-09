@@ -28,7 +28,7 @@ async function createReleaseJSON() {
                 for (const variant of variants) {
                     const { displayName, file } = variant;
                     releaseData.release.push({
-                        binary: `${name}${displayName}${version}`,
+                        binary: `${name} ${displayName} ${version}`,
                         otaurl: file
                     });
                 }
