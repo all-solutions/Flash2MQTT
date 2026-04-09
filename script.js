@@ -205,6 +205,44 @@ function getURLParameter(name) {
     return new URLSearchParams(window.location.search).get(name);
 }
 
+function resolveChipFamily(variant) {
+    if (variant.chipFamily) {
+        return variant.chipFamily;
+    }
+
+    const searchText = `${variant.displayName || ''} ${variant.file || ''}`.toUpperCase();
+
+    if (searchText.includes('ESP32-C3') || searchText.includes('ESP32C3')) {
+        return 'ESP32-C3';
+    }
+
+    if (searchText.includes('ESP32-S3') || searchText.includes('ESP32S3')) {
+        return 'ESP32-S3';
+    }
+
+    if (searchText.includes('ESP32-S2') || searchText.includes('ESP32S2')) {
+        return 'ESP32-S2';
+    }
+
+    if (searchText.includes('ESP32-C2') || searchText.includes('ESP32C2')) {
+        return 'ESP32-C2';
+    }
+
+    if (searchText.includes('ESP32-C6') || searchText.includes('ESP32C6')) {
+        return 'ESP32-C6';
+    }
+
+    if (searchText.includes('ESP32-H2') || searchText.includes('ESP32H2')) {
+        return 'ESP32-H2';
+    }
+
+    if (searchText.includes('ESP32')) {
+        return 'ESP32';
+    }
+
+    return 'ESP8266';
+}
+
 async function fetchFirmwareList() {
     const { firmwareSelect } = elements();
 
@@ -266,7 +304,7 @@ document.getElementById('firmwareSelect').addEventListener('change', async funct
         variants.forEach((variant) => {
             const option = document.createElement('option');
             option.value = variant.file;
-            option.dataset.chipFamily = variant.chipFamily || 'ESP8266';
+            option.dataset.chipFamily = resolveChipFamily(variant);
 
             let displayText = variant.displayName;
             if (displayText === 'D1 Mini') {
