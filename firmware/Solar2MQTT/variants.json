@@ -1,2 +1,18 @@
 [
+  {
+    "displayName": "ESP32-C3 Super Mini",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp32c3_supermini_V2.0.1.bin"
+  },
+  {
+    "displayName": "ESP32-S3 Super Mini",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp32s3_supermini_V2.0.1.bin"
+  },
+  {
+    "displayName": "Waveshare ESP32-S3 ETH",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_waveshare_esp32_s3_eth_V2.0.1.bin"
+  },
+  {
+    "displayName": "Wemos D1 Mini32",
+    "file": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_wemos_d1_mini32_V2.0.1.bin"
+  }
 ]
