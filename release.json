@@ -1,14 +1,6 @@
 {
   "release": [
     {
-      "binary": "Daly2MQTT D1 Mini 2.15.1",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_d1_mini_2.15.1.bin"
-    },
-    {
-      "binary": "Daly2MQTT ESP-01 2.15.1",
-      "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Daly2MQTT/Daly2MQTT_esp01_1m_2.15.1.bin"
-    },
-    {
       "binary": "Solar2MQTT ESP32-C3 Super Mini 2.0.3",
       "otaurl": "https://all-solutions.github.io/Flash2MQTT/firmware/Solar2MQTT/Solar2MQTT_esp32c3_supermini_V2.0.3.bin"
     },
