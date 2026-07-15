@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download the 2MQTT-Flasher desktop application for Windows, macOS, or Linux.">
+    <title>2MQTT-Flasher Download</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="backgroundCanvas" aria-hidden="true"></canvas>
+
+    <main class="page-shell">
+        <header class="hero-card">
+            <div class="hero-topbar">
+                <div class="brand-row">
+                    <div class="brand-mark" aria-hidden="true">2MF</div>
+                    <div class="brand-copy">
+                        <p class="eyebrow" data-i18n="eyebrow">Desktop Flasher</p>
+                        <h1 data-i18n="heroTitle">2MQTT-Flasher</h1>
+                        <p class="hero-text" data-i18n="heroText">Flash ESP8266 and ESP32 devices with a compact desktop application.</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <a class="back-link" href="index.html" data-i18n="backLink">Web flasher</a>
+                    <div class="language-toggle" aria-label="Language switch">
+                        <button type="button" class="lang-button is-active" data-lang="en">EN</button>
+                        <button type="button" class="lang-button" data-lang="de">DE</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-grid download-grid">
+            <article class="panel panel-accent">
+                <div class="panel-heading">
+                    <p class="panel-kicker" data-i18n="featuresKicker">Features</p>
+                    <h2 data-i18n="featuresTitle">Everything in one app</h2>
+                </div>
+                <ul class="feature-list">
+                    <li><span class="feature-icon">01</span><div><strong data-i18n="feature1Title">Local or current releases</strong><p data-i18n="feature1Text">Select your own BIN file or load firmware from current *2MQTT releases.</p></div></li>
+                    <li><span class="feature-icon">02</span><div><strong data-i18n="feature2Title">Automatic device detection</strong><p data-i18n="feature2Text">Find serial ports and identify connected ESP chips automatically.</p></div></li>
+                    <li><span class="feature-icon">03</span><div><strong data-i18n="feature3Title">Integrated serial logs</strong><p data-i18n="feature3Text">Open the live device output directly after flashing.</p></div></li>
+                </ul>
+            </article>
+
+            <article class="panel installer-panel">
+                <div class="panel-heading">
+                    <p class="panel-kicker" data-i18n="downloadKicker">Download</p>
+                    <h2 data-i18n="downloadTitle">Choose your operating system</h2>
+                </div>
+                <div class="release-status" aria-live="polite">
+                    <span data-i18n="latestVersion">Latest version</span>
+                    <strong id="releaseVersion">Loading…</strong>
+                </div>
+                <div class="download-list" id="downloadList" aria-busy="true"></div>
+                <p class="status-text" id="downloadStatus" data-i18n="loadingReleases">Loading current downloads from GitHub…</p>
+                <a class="secondary-link" href="https://github.com/all-solutions/2MQTT-Flasher/releases" target="_blank" rel="noopener" data-i18n="allReleases">View all releases on GitHub</a>
+            </article>
+        </section>
+
+        <section class="panel usage-panel">
+            <div class="panel-heading">
+                <p class="panel-kicker" data-i18n="workflowKicker">Workflow</p>
+                <h2 data-i18n="workflowTitle">Ready in three steps</h2>
+            </div>
+            <ol class="compact-steps">
+                <li><span>1</span><div><strong data-i18n="step1Title">Download and unpack</strong><p data-i18n="step1Text">Download the package for your system and extract the ZIP archive.</p></div></li>
+                <li><span>2</span><div><strong data-i18n="step2Title">Connect your ESP</strong><p data-i18n="step2Text">Connect the device by USB and launch 2MQTT-Flasher.</p></div></li>
+                <li><span>3</span><div><strong data-i18n="step3Title">Select and flash</strong><p data-i18n="step3Text">Choose local or release firmware, then click Flash ESP.</p></div></li>
+            </ol>
+        </section>
+
+        <footer class="page-footer">
+            <p data-i18n="footerLine1">2MQTT-Flasher uses Espressif esptool under the hood</p>
+            <p>&copy; 2024-<span id="currentYear"></span> by All-Solutions®</p>
+        </footer>
+    </main>
+
+    <aside class="linux-toast" id="linuxToast" role="status" aria-live="polite" aria-hidden="true">
+        <button class="toast-close" id="toastClose" type="button" aria-label="Close">×</button>
+        <div class="toast-icon" aria-hidden="true">LIN</div>
+        <div class="toast-content">
+            <strong data-i18n="linuxNoticeTitle">Linux permission required</strong>
+            <p data-i18n="linuxNoticeText">Your user must belong to the dialout group. Run this command, then log out and back in:</p>
+            <div class="command-row">
+                <code id="dialoutCommand">sudo usermod -a -G dialout $(whoami)</code>
+                <button class="copy-command" id="copyCommand" type="button" data-i18n="copyCommand">Copy</button>
+            </div>
+        </div>
+    </aside>
+    <script src="background.js"></script>
+    <script src="flasher-download.js"></script>
+</body>
+</html>
