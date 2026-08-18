@@ -1,49 +1,71 @@
-name: Generate Release JSON
+name: Generate Release JSON and Deploy Pages
 
 on:
-  # schedule:
-    # - cron: '0 0 * * *'  # Täglich um Mitternacht
   workflow_dispatch:
   push:
     branches:
-      - main  # Bei jedem Push auf den main-Zweig
+      - main
 
 concurrency:
-  group: generate-release
+  group: pages
   cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install node-fetch@2
 
-      # - name: Delay after push
-      #   run: sleep 60
-
       - name: Generate release.json
         run: node generateRelease.js
 
-      - name: Commit and Push release.json
+      - name: Commit and push release.json
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
           git add release.json
           if git diff --cached --quiet; then
             echo "No changes to release.json; skipping commit."
-            exit 0
+          else
+            git commit -m "Update release.json"
+            git push
           fi
-          git commit -m "Update release.json"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare GitHub Pages artifact
+        run: |
+          mkdir _site
+          cp index.html release.html flasher-download.html _site/
+          cp background.js script.js flasher-download.js styles.css favicon.ico release.json _site/
+          cp -R firmware _site/
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
